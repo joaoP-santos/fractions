@@ -1,18 +1,34 @@
 const canvas = document.querySelector("canvas");
 
-var rectWidth;
-var rectHeight;
+var rectLength;
 var rectX;
 var rectY;
+var side;
+
+const sideInput = document.querySelector("input#side-input");
+const sideText = document.querySelector("p");
+function updateValues(redraw) {
+  if (side == sideInput.value && redraw == false) {
+    console.log("a");
+    return;
+  } else {
+    side = sideInput.value;
+    sideText.innerHTML = "Comprimento do lado: " + side;
+    if (innerHeight > innerWidth) {
+      rectLength = (side * innerHeight) / 50;
+    } else {
+      rectLength = (side * innerWidth) / 90;
+    }
+    rectX = innerWidth / 2 - rectLength / 2;
+    rectY = innerHeight / 2 - rectLength / 2;
+  }
+}
 
 function resizeWindow() {
   canvas.width = innerWidth;
   canvas.height = innerHeight;
 
-  rectWidth = (innerWidth * 6) / 8;
-  rectHeight = (innerHeight * 3) / 5;
-  rectX = innerWidth / 8;
-  rectY = (innerHeight * 3) / 10;
+  updateValues(true);
 }
 
 resizeWindow();
@@ -21,46 +37,59 @@ window.addEventListener("resize", resizeWindow);
 
 const c = canvas.getContext("2d");
 
-const numerator = document.querySelector("input#numeratorInput");
-const denominator = document.querySelector("input#denominatorInput");
-
 function animate() {
+  updateValues();
   requestAnimationFrame(animate);
-  numerator.max = denominator.value;
   c.clearRect(0, 0, innerWidth, innerHeight);
+  c.rect(0, 0, innerWidth, innerHeight);
+  c.fillStyle = "#9AEBA3";
+  c.fill();
   c.lineWidth = 5;
   c.beginPath();
-  c.rect(rectX, rectY, rectWidth, rectHeight);
+  c.rect(rectX, rectY, rectLength, rectLength);
+  c.fillStyle = "#DAFDBA";
+  c.fill();
+  for (x = 0; x < side; x++) {
+    for (y = 0; y < side; y++) {
+      c.beginPath();
+      c.strokeStyle = "#45C4B0";
+
+      c.moveTo(
+        (innerWidth - rectLength) / 2 + (x * rectLength) / side,
+        (innerHeight - rectLength) / 2
+      );
+      c.lineTo(
+        (innerWidth - rectLength) / 2 + (x * rectLength) / side,
+        (innerHeight + rectLength) / 2
+      );
+
+      c.moveTo(
+        (innerWidth - rectLength) / 2,
+        (innerHeight - rectLength) / 2 + (y * rectLength) / side
+      );
+      c.lineTo(
+        (innerWidth + rectLength) / 2,
+        (innerHeight - rectLength) / 2 + (y * rectLength) / side
+      );
+      c.lineWidth = "1";
+      c.stroke();
+    }
+  }
+
+  c.lineWidth = 5;
+  c.beginPath();
+  c.rect(rectX, rectY, rectLength, rectLength);
   c.strokeStyle = "#13678A";
   c.stroke();
-  c.fillStyle = "#45C4B0";
-  c.fill();
 
-  for (var i = 0; i < denominator.value; i++) {
-    if (numerator.value > i) {
-      c.fillStyle = "#DAFDBA";
-    } else {
-      c.fillStyle = "#45C4B0";
-    }
-    c.beginPath();
-    c.rect(
-      rectX + (i * rectWidth) / denominator.value,
-      rectY,
-      rectWidth / denominator.value,
-      rectHeight
-    );
-    c.lineWidth = 2;
-    c.stroke();
-    c.fill();
-  }
-  c.font = `bold ${0.1 * innerHeight}px Arial`;
+  c.font = `bold ${0.05 * innerHeight}px Rosarivo`;
   c.textAlign = "center";
-  c.fillText(numerator.value, innerWidth / 2, (innerHeight * 2) / 20);
-  c.beginPath();
-  c.moveTo(innerWidth / 2 - innerHeight * 0.1, (innerHeight * 7) / 50);
-  c.lineTo(innerWidth / 2 + innerHeight * 0.1, (innerHeight * 7) / 50);
-  c.stroke();
-  c.fillText(denominator.value, innerWidth / 2, (innerHeight * 5) / 20);
+  c.fillStyle = "#13678A";
+  c.fillText(
+    `Área total: ${Math.pow(side, 2)}`,
+    innerWidth / 2,
+    rectY + rectLength + 50
+  );
 }
 
 animate();
