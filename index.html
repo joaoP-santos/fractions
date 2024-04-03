@@ -3,28 +3,20 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Fractions simulator</title>
+    <title>Simulador de raiz quadrada</title>
     <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rosarivo:ital@0;1&family=Single+Day&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
-    <div style="position: absolute; display: block; padding: 10px">
-      <strong>Numerador: </strong>
-      <input
-        type="range"
-        name="numerator"
-        id="numeratorInput"
-        min="0"
-        max="30"
-      />
+    <div>
+      <p>Comprimento do lado:</p>
+      <input type="range" name="numerator" id="side-input" min="0" max="30" />
       <br />
-      <strong>Denominador: </strong>
-      <input
-        type="range"
-        name="denominator"
-        id="denominatorInput"
-        min="1"
-        max="30"
-      />
     </div>
     <canvas></canvas>
     <script src="./script.js"></script>
