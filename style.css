@@ -8,24 +8,10 @@ body {
   overflow-y: hidden;
 }
 
-div {
-  position: absolute;
-  display: block;
-  padding: 30px;
-}
-
-p {
-  color: #13678a;
-  font-weight: bolder;
-  font-size: xx-large;
-  font-family: "Rosarivo", cursive;
+strong {
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 input {
   width: 100%;
-  accent-color: #dafdba;
-}
-
-input::-webkit-slider-thumb {
-  background-color: #dafdba;
 }
